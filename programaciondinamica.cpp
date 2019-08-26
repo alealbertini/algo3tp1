@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 int main ()
@@ -6,11 +7,11 @@ int main ()
   int n, w;
   cin >> n >> w;
  
-  int *tamanios = new int[n];
+  int *pesos = new int[n];
   int *beneficios = new int[n];
 
   for(int i = 0; i < n; i++){
-  cin >> tamanios[i] >> beneficios[i];
+     cin >> pesos[i] >> beneficios[i];
   }
 
   // Input:
@@ -25,24 +26,36 @@ int main ()
 
   // NOTE: The array "v" and array "w" are assumed to store all relevant values starting at index 1.
 
+  int values[n][w];
 
-  for(int j = 0; j < w; j++){
-      m[0, j] = 0;
+  for(int c = 0; c < w; c++){
+      values[0][c] = 0;
+  }
+
+  for(int j= 1; j < n; j++){
+      values[j][0] = 0;
   }
 
   for(int i = 1; i < n; i++){
 
       for(int j = 0; j < w; j++){
 
-          if(w[i] > j){
+        if(j < pesos[i]){
 
-              m[i, j] = m[i-1, j];
-          } else{
+          values[i][j] = values[i-1][j];
+        } else{
 
-              m[i, j] = max(m[i-1, j], m[i-1, j-pesos[i]] + beneficios[i]);
-          }
+          values[i][j] = max(values[i-1][j], values[i-1][j-pesos[i]] + beneficios[i]);
+        }
       }
-  }        
+  }
 
-  return 0;
+  /*for(int i = 1; i < n; i++){
+      for(int j = 0; j < w; j++){
+        cout << "i: " << i << " j: " << j << " value: " << values[i][j] << endl;
+      }
+  }*/          
+
+  cout << values[n - 1][w - 1] << endl;
+  return values[n - 1][w - 1];
 }
