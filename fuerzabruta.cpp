@@ -43,7 +43,7 @@ int main ()
            if(paquetesEnLaMochila >= cantElementos){   
                 break;
            } else {
-              pesoAcumulado += pesos[j];
+              pesoAcumulado += pesos[j];    // TODO: REVISAR ESTO, NO DEBERIA HACER LAS OPERACIONES DE PESO Y BENEFICIO JUNTAS?
 
               if(pesoAcumulado <= w){  // SI EL PAQUETE ENTRA EN LA MOCHILA, LO AGREGO
 
