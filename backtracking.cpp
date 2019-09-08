@@ -2,33 +2,80 @@
 #include <utility>
 using namespace std;
 
+int beneficioMaximo = 0;
 
 pair<int, int> backtracking(int *arrayPesos, int *arrayBeneficios, int ij, int n, int w, pair<int, int> solucionParcial){
 
     if(ij == n - 1){   // ES EL ULTIMO NODO POR LO TANTO ES UNA HOJA 
 
         if(arrayPesos[ij] + solucionParcial.first <= w){
+            
             solucionParcial.first += arrayPesos[ij];
             solucionParcial.second += arrayBeneficios[ij];
-            return solucionParcial;
+            
+            //cout << "IF2 ij" << ij << " peso " << arrayPesos[ij] << " peso acum " << solucionParcial.first << " ben acum " << solucionParcial.second << /*" w " << w <<*/ endl;
+            //cout << "SOL PARCIAL " << solucionParcial.second << endl;
+
+            if(solucionParcial.second > beneficioMaximo){
+                beneficioMaximo = solucionParcial.second;
+            }
         }
+
+        return solucionParcial;
+
     } else {
 
-        if(arrayPesos[ij] + solucionParcial.first <= w){
-            solucionParcial.first += arrayPesos[ij];
-            solucionParcial.second += arrayBeneficios[ij];
-        }   // PODA: SI ESTE NODO NO ENTRA NO SIRVE SEGUIR PROBANDO CON ESTA COMBINACION
+        for(int i = ij; i < n; i++){
+            
+            // PODA POR FACTIBILIDAD: SI YA NO HAY MAS ESPACIO EN LA MOCHILA Y EL BENEFICIO ACUMULADO ES MENOR QUE EL BENEFICIO MAXIMO
+            // NO TIENE SENTIDO SEGUIR PROBANDO CON ESTA COMBINACION YA QUE NO HAY ESPACIO Y NO SE VA A SUPERAR EL BENEFICIO MAXIMO.
+            if(w - solucionParcial.first == 0){
+                if(solucionParcial.second > beneficioMaximo){
+                    beneficioMaximo = solucionParcial.second;
+                }
+                break;
+            }
+            // FIN DE PODA POR FACTIBILIDAD
 
-        backtracking(arrayPesos, arrayBeneficios, ij + 1, n, w, solucionParcial);
+            // PODA POR OPTIMALIDAD: ME FIJO SI SIGO ITERANDO VOY A LLEGAR A ACUMULAR UN BENEFICIO MAYOR DEL BENEFICIO MAXIMO.
+            // SI EL BENEFICIO TOTAL QUE VOY A ACUMULAR ES MENOR QUE EL BENEFICIO MAXIMO, NO TIENE SENTIDO SEGUIR HASTA EL FINAL.
+            int sumaBeneficioFuturo = solucionParcial.second;
+            for(int j = ij; j < n; j++){
+                sumaBeneficioFuturo += arrayBeneficios[j];
+            }
+
+            if(sumaBeneficioFuturo < beneficioMaximo){
+                break;
+            }
+            // FIN PODA POR OPTIMALIDAD
+
+            if(arrayPesos[i] + solucionParcial.first <= w){
+
+                solucionParcial.first += arrayPesos[i];
+                solucionParcial.second += arrayBeneficios[i];
+
+                //cout << "IF " << ij << " peso " << arrayPesos[i] << " peso acum " << solucionParcial.first << " ben acum " << solucionParcial.second /*<< " w " << w*/ << endl;
+
+                backtracking(arrayPesos, arrayBeneficios, i + 1, n, w, solucionParcial);
+
+                solucionParcial.first -= arrayPesos[i];
+                solucionParcial.second -= arrayBeneficios[i];
+
+            } else {
+                backtracking(arrayPesos, arrayBeneficios, i + 1, n, w, solucionParcial);
+            }
+        }
+           // PODA: SI ESTE NODO NO ENTRA NO SIRVE SEGUIR PROBANDO CON ESTA COMBINACION
     }
 }
 
 
 int main ()
 {
-  int n, w;
   //cin >> n >> w;
-  n = 5; w = 25;
+  int n = 5; 
+  int w = 25;
+
   /*int *pesos = new int[n];
   int *beneficios = new int[n];
 
@@ -36,20 +83,12 @@ int main ()
     cin >> pesos[i] >> beneficios[i];
   }*/
 
-  int pesos [5] = { 10, 15, 5, 10, 5 };
-  int beneficios [5] = { 5, 4, 13, 8, 8 };
+  int pesos [5] = { 5, 10, 10, 15, 5 };
+  int beneficios [5] = { 13, 5, 8, 4, 8 };
 
-  int beneficioMaximo = 0;
   pair<int, int> solucion = make_pair(0, 0);  
 
-  for(int i = 0; i < n; i++){
-
-      pair<int, int> sol = backtracking(pesos, beneficios, i, n, w, solucion);
-
-      if(sol.second > beneficioMaximo){
-          beneficioMaximo = sol.second;
-      }
-  } 
+  backtracking(pesos, beneficios, 0, n, w, solucion);
 
   cout << beneficioMaximo << endl;
   return beneficioMaximo;
