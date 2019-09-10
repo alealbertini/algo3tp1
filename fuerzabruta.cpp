@@ -2,7 +2,62 @@
 #include <utility>
 using namespace std;
 
+int fuerza_bruta(int *pesos, int *beneficios, int n, int w){
+    int pesoAcumulado = 0;
+    int beneficioMaximo = 0;
+    int beneficioActual = 0;
+    int paquetesEnLaMochila = 0;
 
+    for(int l = 0; l < n; l++){
+
+      pesoAcumulado = 0;
+      beneficioActual = 0;
+      paquetesEnLaMochila = 0;
+
+      for(int cantElementos = 1; cantElementos <= n; cantElementos++){
+
+        pesoAcumulado = 0;
+        beneficioActual = 0;
+        paquetesEnLaMochila = 0;
+
+        for(int i = l; i < n; i++){
+
+          paquetesEnLaMochila++;
+          pesoAcumulado += pesos[i];
+          beneficioActual += beneficios[i];
+
+          for(int j = i + 1; j < n; j++){
+             
+             if(paquetesEnLaMochila >= cantElementos){   
+                  break;
+             } else {
+                pesoAcumulado += pesos[j];    // TODO: REVISAR ESTO, NO DEBERIA HACER LAS OPERACIONES DE PESO Y BENEFICIO JUNTAS?
+
+                if(pesoAcumulado <= w){  // SI EL PAQUETE ENTRA EN LA MOCHILA, LO AGREGO
+
+                    beneficioActual += beneficios[j];
+
+                    if(beneficioActual > beneficioMaximo){
+                       beneficioMaximo = beneficioActual;
+                    }
+                }
+                // SI EL PAQUETE NO ENTRA EN LA MOCHILA, NO LO AGREGO Y ME FIJO SI ENTRA EL SIGUIENTE PAQUETE
+             }
+
+             pesoAcumulado -= pesos[j];
+             beneficioActual -= beneficios[j];
+             //cout << paquetesEnLaMochila << " " << cantElementos << endl;
+             //cout << "El beneficio de " << i << " " << j << " es: " << beneficioActual << endl;
+          }
+        }
+      }  
+    }
+
+    //cout << beneficioMaximo << endl;
+    return beneficioMaximo;
+}
+
+/*
 int main ()
 {
   int n, w;
@@ -15,57 +70,10 @@ int main ()
     cin >> pesos[i] >> beneficios[i];
   }
 
-  int pesoAcumulado = 0;
-  int beneficioMaximo = 0;
-  int beneficioActual = 0;
-  int paquetesEnLaMochila = 0;
+  int result = fuerza_bruta(pesos, beneficios, n, w);
 
-  for(int l = 0; l < n; l++){
-
-    pesoAcumulado = 0;
-    beneficioActual = 0;
-    paquetesEnLaMochila = 0;
-
-    for(int cantElementos = 1; cantElementos <= n; cantElementos++){
-
-      pesoAcumulado = 0;
-      beneficioActual = 0;
-      paquetesEnLaMochila = 0;
-
-      for(int i = l; i < n; i++){
-
-        paquetesEnLaMochila++;
-        pesoAcumulado += pesos[i];
-        beneficioActual += beneficios[i];
-
-        for(int j = i + 1; j < n; j++){
-           
-           if(paquetesEnLaMochila >= cantElementos){   
-                break;
-           } else {
-              pesoAcumulado += pesos[j];    // TODO: REVISAR ESTO, NO DEBERIA HACER LAS OPERACIONES DE PESO Y BENEFICIO JUNTAS?
-
-              if(pesoAcumulado <= w){  // SI EL PAQUETE ENTRA EN LA MOCHILA, LO AGREGO
-
-                  beneficioActual += beneficios[j];
-
-                  if(beneficioActual > beneficioMaximo){
-                     beneficioMaximo = beneficioActual;
-                  }
-              }
-              // SI EL PAQUETE NO ENTRA EN LA MOCHILA, NO LO AGREGO Y ME FIJO SI ENTRA EL SIGUIENTE PAQUETE
-           }
-
-           pesoAcumulado -= pesos[j];
-           beneficioActual -= beneficios[j];
-           //cout << paquetesEnLaMochila << " " << cantElementos << endl;
-           //cout << "El beneficio de " << i << " " << j << " es: " << beneficioActual << endl;
-        }
-      }
-    }  
-  }
-
-  cout << beneficioMaximo << endl;
-  return beneficioMaximo;
+  cout << "EL RESULTADO ES: " << result << endl;
 }
+*/
+
 
