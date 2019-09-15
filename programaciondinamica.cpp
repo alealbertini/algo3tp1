@@ -4,38 +4,39 @@ using namespace std;
 
 int programacion_dinamica(int *pesos, int *beneficios, int n, int w){
     
-    int values[n][w];
+    int values[n+1][w+1];
 
-    for(int c = 0; c < w; c++){
+    for(int c = 0; c <= w; c++){
         values[0][c] = 0;
     }
 
-    for(int j= 1; j < n; j++){
+    for(int j = 1; j <= n; j++){
         values[j][0] = 0;
     }
 
-    for(int i = 1; i < n; i++){
+    for(int j = 1; j <= n; j++){
 
-        for(int j = 0; j < w; j++){
+        for(int c = 1; c <= w; c++){
 
-          if(j < pesos[i]){
+          if(c < pesos[j-1]){
 
-            values[i][j] = values[i-1][j];
+            values[j][c] = values[j-1][c];
           } else{
 
-            values[i][j] = max(values[i-1][j], values[i-1][j-pesos[i]] + beneficios[i]);
+            values[j][c] = max(values[j-1][c], values[j-1][c-pesos[j-1]] + beneficios[j-1]);
           }
         }
     }
 
-    /*for(int i = 1; i < n; i++){
-        for(int j = 0; j < w; j++){
-          cout << "i: " << i << " j: " << j << " value: " << values[i][j] << endl;
+    /*for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= w; j++){
+          cout << values[i][j] << " ";
         }
-    }*/          
+        cout << endl;
+    } */       
 
     //cout << values[n - 1][w - 1] << endl;
-    return values[n - 1][w - 1];
+    return values[n][w];
 }
 
 /*

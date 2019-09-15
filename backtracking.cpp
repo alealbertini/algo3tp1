@@ -55,6 +55,10 @@ pair<int, int> backtracking(int *arrayPesos, int *arrayBeneficios, int ij, int n
                 solucionParcial.first += arrayPesos[i];
                 solucionParcial.second += arrayBeneficios[i];
 
+                if(solucionParcial.second > beneficioMaximo){
+                    beneficioMaximo = solucionParcial.second;
+                }
+
                 //cout << "IF " << ij << " peso " << arrayPesos[i] << " peso acum " << solucionParcial.first << " ben acum " << solucionParcial.second /*<< " w " << w*/ << endl;
 
                 backtracking(arrayPesos, arrayBeneficios, i + 1, n, w, solucionParcial);

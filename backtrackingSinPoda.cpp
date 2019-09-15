@@ -27,33 +27,15 @@ pair<int, int> backtrackingSinPoda(int *arrayPesos, int *arrayBeneficios, int ij
     } else {
 
         for(int i = ij; i < n; i++){
-            
-            // PODA POR FACTIBILIDAD: SI YA NO HAY MAS ESPACIO EN LA MOCHILA Y EL BENEFICIO ACUMULADO ES MENOR QUE EL BENEFICIO MAXIMO
-            // NO TIENE SENTIDO SEGUIR PROBANDO CON ESTA COMBINACION YA QUE NO HAY ESPACIO Y NO SE VA A SUPERAR EL BENEFICIO MAXIMO.
-            /*if(w - solucionParcial.first == 0){
-                if(solucionParcial.second > beneficioMaximoSinPoda){
-                    beneficioMaximoSinPoda = solucionParcial.second;
-                }
-                break;
-            }*/
-            // FIN DE PODA POR FACTIBILIDAD
-
-            // PODA POR OPTIMALIDAD: ME FIJO SI SIGO ITERANDO VOY A LLEGAR A ACUMULAR UN BENEFICIO MAYOR DEL BENEFICIO MAXIMO.
-            // SI EL BENEFICIO TOTAL QUE VOY A ACUMULAR ES MENOR QUE EL BENEFICIO MAXIMO, NO TIENE SENTIDO SEGUIR HASTA EL FINAL.
-            /*int sumaBeneficioFuturo = solucionParcial.second;
-            for(int j = ij; j < n; j++){
-                sumaBeneficioFuturo += arrayBeneficios[j];
-            }
-
-            if(sumaBeneficioFuturo < beneficioMaximoSinPoda){
-                break;
-            }*/
-            // FIN PODA POR OPTIMALIDAD
 
             if(arrayPesos[i] + solucionParcial.first <= w){
 
                 solucionParcial.first += arrayPesos[i];
                 solucionParcial.second += arrayBeneficios[i];
+
+                if(solucionParcial.second > beneficioMaximoSinPoda){
+                    beneficioMaximoSinPoda = solucionParcial.second;
+                }
 
                 //cout << "IF " << ij << " peso " << arrayPesos[i] << " peso acum " << solucionParcial.first << " ben acum " << solucionParcial.second /*<< " w " << w*/ << endl;
 
