@@ -29,7 +29,6 @@ int main ()
     cout << "p: " << pesos[i] << " b: " << beneficios[i] << endl;
   }*/
 
-
   clock_t inicioBTSinPoda, finBacktrackingSinPoda;
   clock_t inicioBT, finBT;              
  
@@ -38,23 +37,22 @@ int main ()
   pair<int, int> solucionSinPoda = make_pair(0, 0);
   backtrackingSinPoda(pesos, beneficios, 0, n, w, solucionSinPoda);
   finBacktrackingSinPoda = clock();  
-  cout << "RESULTADO BACKTRACING SIN PODA: " << beneficioMaximoSinPoda << endl;
+  cout << "RESULTADO BACKTRACKING SIN PODA: " << beneficioMaximoSinPoda << endl;
 
   // BACKTRACKING 
   inicioBT = clock();
   pair<int, int> solucion = make_pair(0, 0);
   backtracking(pesos, beneficios, 0, n, w, solucion);
   finBT = clock();
-  cout << "RESULTADO BACKTRACING: " << beneficioMaximo << endl;
+  cout << "RESULTADO BACKTRACKING: " << beneficioMaximo << endl;
 
       
   double ms_totales_BT_Sin_Poda = double(finBacktrackingSinPoda - inicioBTSinPoda) / CLOCKS_PER_SEC; 
   double ms_totales_BT = double(finBT - inicioBT) / CLOCKS_PER_SEC; 
 
-  cout << "TIEMPO BACKTRACING SIN PODA: " << ms_totales_BT_Sin_Poda << endl;
+  cout << "TIEMPO BACKTRACKING SIN PODA: " << ms_totales_BT_Sin_Poda << endl;
   cout << "TIEMPO BACKTRACKING: " << ms_totales_BT << endl;
 
-  
   return 0;
 }
 

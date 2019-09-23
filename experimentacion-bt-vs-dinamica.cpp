@@ -10,32 +10,29 @@ using namespace std;
 
 int main ()
 {
-  int n = 3;
+  int n = 20;
   int w = 15;
   extern int beneficioMaximoBT;
 
-  //int pesos[10] = { 50, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-//int beneficios[10] = { 150, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-
-  int pesos[3] = { 9, 6, 5 };
-  int beneficios[3] = { 38, 40, 24 };
+  int pesos[n] = { 9, 6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
+  int beneficios[n] = { 38, 40, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
   clock_t inicioDinamica, finDinamica;
   clock_t inicioBT, finBT;              
  
-  // BACKTRACKING SIN PODA
+  // DINAMICA
   inicioDinamica = clock();
   pair<int, int> solucionDinamica = make_pair(0, 0);
   int resultDinamica = programacion_dinamica(pesos, beneficios, n, w);
   finDinamica = clock();  
-  cout << "RESULTADO DINAMICA: " << resultDinamica << endl;
+  //cout << "RESULTADO DINAMICA: " << resultDinamica << endl;
 
   // BACKTRACKING 
   inicioBT = clock();
   pair<int, int> solucion = make_pair(0, 0);
   backtracking(pesos, beneficios, 0, n, w, solucion);
   finBT = clock();
-  cout << "RESULTADO BACKTRACING: " << beneficioMaximo << endl;
+  //cout << "RESULTADO BACKTRACING: " << beneficioMaximo << endl;
 
       
   double ms_totales_Dinamica= double(finDinamica - inicioDinamica) / CLOCKS_PER_SEC; 

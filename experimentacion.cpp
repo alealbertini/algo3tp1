@@ -11,7 +11,7 @@ using namespace std;
 
 int main ()
 {
-  int n = 10;
+  int n = 30;
   int w = 150;
   extern int beneficioMaximo;
  
@@ -38,20 +38,20 @@ int main ()
   inicioFuerzaBruta = clock();
   int resultFuerzaBruta = fuerza_bruta(pesos, beneficios, n, w);
   finFuerzaBruta = clock();  
-  cout << "RESULTADO FUERZA BRUTA: " << resultFuerzaBruta << endl;
+  //cout << "RESULTADO FUERZA BRUTA: " << resultFuerzaBruta << endl;
 
   // BACKTRACKING
   inicioBacktracking = clock();
   pair<int, int> solucion = make_pair(0, 0);
   backtracking(pesos, beneficios, 0, n, w, solucion);
   finBacktracking = clock();
-  cout << "RESULTADO BACKTRACING: " << beneficioMaximo << endl;
+  //cout << "RESULTADO BACKTRACING: " << beneficioMaximo << endl;
 
   // PROGRAMACION DINAMICA
   inicioPD = clock();
   int resultDinamica = programacion_dinamica(pesos, beneficios, n, w);
   finPD = clock();
-  cout << "RESULTADO PROGRAMACION DINAMICA: " << resultDinamica << endl;
+  //cout << "RESULTADO PROGRAMACION DINAMICA: " << resultDinamica << endl;
       
   double ms_totales_FB = double(finFuerzaBruta - inicioFuerzaBruta) / CLOCKS_PER_SEC; 
   double ms_totales_BT = double(finBacktracking - inicioBacktracking) / CLOCKS_PER_SEC; 
