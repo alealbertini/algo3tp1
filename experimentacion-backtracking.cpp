@@ -10,7 +10,7 @@ using namespace std;
 
 int main ()
 {
-  int n = 25;
+  int n = 30;
   int w = 150;
   extern int beneficioMaximo;
   extern int beneficioMaximoSinPoda;
@@ -37,14 +37,14 @@ int main ()
   pair<int, int> solucionSinPoda = make_pair(0, 0);
   backtrackingSinPoda(pesos, beneficios, 0, n, w, solucionSinPoda);
   finBacktrackingSinPoda = clock();  
-  cout << "RESULTADO BACKTRACKING SIN PODA: " << beneficioMaximoSinPoda << endl;
+  //cout << "RESULTADO BACKTRACKING SIN PODA: " << beneficioMaximoSinPoda << endl;
 
   // BACKTRACKING 
   inicioBT = clock();
   pair<int, int> solucion = make_pair(0, 0);
   backtracking(pesos, beneficios, 0, n, w, solucion);
   finBT = clock();
-  cout << "RESULTADO BACKTRACKING: " << beneficioMaximo << endl;
+  //cout << "RESULTADO BACKTRACKING: " << beneficioMaximo << endl;
 
       
   double ms_totales_BT_Sin_Poda = double(finBacktrackingSinPoda - inicioBTSinPoda) / CLOCKS_PER_SEC; 
